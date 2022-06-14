@@ -30,14 +30,14 @@ router.post('/login', async (req, res) => {
       },
     });
 
-    if (!dbUserData) {
+    if (!userData) {
       res
         .status(400)
         .json({ message: 'Incorrect email or password. Please try again!' });
       return;
     }
 
-    const validPassword = await dbUserData.checkPassword(req.body.password);
+    const validPassword = await userData.checkPassword(req.body.password);
 
     if (!validPassword) {
       res
@@ -47,6 +47,7 @@ router.post('/login', async (req, res) => {
     }
 
     req.session.save(() => {
+      req.sesion.user_id = userData.id;
       req.session.loggedIn = true;
       console.log(
         '🚀 ~ file: user-routes.js ~ line 57 ~ req.session.save ~ req.session.cookie',
