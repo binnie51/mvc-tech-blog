@@ -14,7 +14,7 @@ Comments.init(
         content: {
             type: DataTypes.TEXT,
         },
-        blog_id: {
+        commentor_id: {
             type: DataTypes.INTEGER,
             references: {
                 model: 'user',
