@@ -1,5 +1,7 @@
 const router = require('express').Router();
-const { Gallery, Painting } = require('../models');
+const { User, Blog, Comments } = require('../models');
+const withAuth = require('../utils/auth');
+const format_date = require('../utils/helper');
 
 // GET all galleries for homepage
 router.get('/', async (req, res) => {
