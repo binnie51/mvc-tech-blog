@@ -28,4 +28,9 @@ router.get('/:id', withAuth, async (req,res) => {
     catch (err) {
         res.status(400).json({ message: "Error! The blog with that ID doesn't exist."})
     }
+});
+
+// CREATE comment 
+router.post('/:id/comments', withAuth, async (req, res) => {
+    
 })
