@@ -1,26 +1,25 @@
 const router = require('express').Router();
 const { User, Blog, Comments } = require('../models');
-const withAuth = require('../utils/auth');
-const format_date = require('../utils/helper');
+const withAuthentication = require('../utils/auth');
 
-// GET all galleries for homepage
+// GET all blogs in the homepage regardless of whether or not users have logged in 
 router.get('/', async (req, res) => {
   try {
-    const dbGalleryData = await Gallery.findAll({
+    const blogData = await Blog.findAll({
       include: [
         {
-          model: Painting,
-          attributes: ['filename', 'description'],
+          model: User,
+          attributes: ['name'],
         },
       ],
     });
 
-    const galleries = dbGalleryData.map((gallery) =>
-      gallery.get({ plain: true })
+    const blogs = blogData.map((blog) =>
+      blog.get({ plain: true })
     );
     res.render('homepage', {
-      galleries,
-      loggedIn: req.session.loggedIn,
+      blogs,
+      logged_in: req.session.logged_in,
     });
   } catch (err) {
     console.log(err);
@@ -28,53 +27,88 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET one gallery
-router.get('/gallery/:id', async (req, res) => {
+// GET one specific blog post with the author, comments, and commenters with :id
+router.get('/blog/:id', withAuthentication, async (req, res) => {
   try {
-    const dbGalleryData = await Gallery.findByPk(req.params.id, {
+    const blogData = await Blog.findByPk(req.params.id, {
       include: [
         {
-          model: Painting,
+          model: User,
           attributes: [
             'id',
-            'title',
-            'artist',
-            'exhibition_date',
-            'filename',
-            'description',
+            'name',
           ],
+        },
+        {
+          model: Comments,
+          attributes: [
+            'content',
+            'comenter_id',
+            'date_created',
+          ]
         },
       ],
     });
 
-    const gallery = dbGalleryData.get({ plain: true });
-    res.render('gallery', { gallery, loggedIn: req.session.loggedIn });
+    const blog = blogData.get({ plain: true });
+    
+    // if logged in user has the same as the author of the blog post, 
+    // they may edit their post(s)
+    if (blog.author_id === req.params.user_id) {
+      res.render('editBlog', {
+        blog, 
+        logged_in: req.session.logged_in,
+        isDashboard: false
+      });
+    }
+    
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
   }
 });
 
-// GET one painting
-router.get('/painting/:id', async (req, res) => {
+// GET Dashboard
+router.get('/dashboard', withAuthentication, async (req, res) => {
   try {
-    const dbPaintingData = await Painting.findByPk(req.params.id);
+    const blogData = await Blog.findAll({
+      where: {
+        author_id: req.session.user_id,
+      },
+      include: {
+        model: User,
+        attributes: ['name']
+      }
+    });
 
-    const painting = dbPaintingData.get({ plain: true });
-    res.render('painting', { painting, loggedIn: req.session.loggedIn });
+    const blogs = blogData.map((blog) => blog.get({ plain: true }));
+    res.render('dashboard', { 
+      blogs,
+      logged_in: req.session.logged_in,
+      isDashboard: true
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
   }
 });
 
-// Login route
+// Login route. If users is already logged in, redirect to 'home', else, to 'login' page
 router.get('/login', (req, res) => {
-  if (req.session.loggedIn) {
+  if (req.session.logged_in) {
     res.redirect('/');
     return;
   }
   res.render('login');
 });
+
+// Signup route
+router.get('/signup', (res, req) => {
+  if (req.session.logged_in) {
+    res.redirect('/');
+    return;
+  }
+  res.render('signup');
+})
 
 module.exports = router;
