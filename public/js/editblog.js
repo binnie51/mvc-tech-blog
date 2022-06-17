@@ -8,7 +8,7 @@ const blodUpdateHandler = async (event) => {
     if (title && content) {
       const response = await fetch(req_url, {
         method: 'POST',
-        body: JSON.stringify({ title, description }),
+        body: JSON.stringify({ title, content }),
         headers: {
           'Content-Type': 'application/json',
         },
