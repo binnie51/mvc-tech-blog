@@ -1,13 +1,19 @@
+// Global vars to identify blogs
+var currentUrl = window.location.pathname;
+const parsedCurrUrl = currentUrl.split('/');
+const blog_id = parseInt(parsedCurrUrl[parsedCurrUrl.length -1]);
+const req_url = `api/blog/${blog_id}`
+
 // UPDATE an entry
 const blodUpdateHandler = async (event) => {
     event.preventDefault();
 
-    const title = document.querySelector('#project-funding').value.trim(); // need to define id in handlebars!!!!
-    const content = document.querySelector('#project-desc').value.trim(); // need to define id in handlebars!!!!
+    const title = document.querySelector('#blog-title').value.trim(); 
+    const content = document.querySelector('#blog-content').value.trim(); 
   
     if (title && content) {
       const response = await fetch(req_url, {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify({ title, content }),
         headers: {
           'Content-Type': 'application/json',
@@ -17,9 +23,9 @@ const blodUpdateHandler = async (event) => {
       if (response.ok) {
         document.location.replace('/dashboard');
       } else {
-        alert('Failed to update this blog!');
+        alert(response.statusText);
       }
-    }
+    } 
 };
 
 // DELETE an entry
@@ -34,15 +40,15 @@ const blogDeleteHandler = async (event) => {
     });
 
     if (response.ok) {
-    document.location.replace('/dashboard');
+      document.location.replace('/dashboard');
     } else {
-    alert('Failed to delete blog entry!');
+      alert(response.statusText);
     }
 };
 
 document
   .querySelector('.blog-update')
-  .addEventListener('submit', blodUpdateHandler);
+  .addEventListener('click', blodUpdateHandler);
 
 document
   .querySelector('.blog-delete')
