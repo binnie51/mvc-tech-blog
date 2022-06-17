@@ -45,19 +45,23 @@
           <div class="row d-flex align justify-content-center h-100">
             <div class="card" style="max-width: 40rem;">
               <div class="card-body">
+
+                <!-- Email input -->
                 <div class="mb-4 mt-4">
                   <!-- <label for="formControlInput" class="form-label">Email address</label> -->
-                  <input type="email" class="form-control login-form" placeholder="Enter your email address">
+                  <input type="email" class="form-control login-form shadow p-3 mb-5 bg-body rounded" placeholder="Enter your email address">
                 </div>
+
+                <!-- Password input -->
                 <div class="mb-4">
                   <!-- <label for="formControlInput" class="form-label">Password</label> -->
-                  <input type="email" class="form-control login-form" placeholder="Enter password">
-                  <a href="/signup" class="mt-4 btn btn-primary">Sign In</a>
+                  <input type="email" class="form-control login-form shadow p-3 mb-5 bg-body rounded" placeholder="Enter password">
+                  <button class="mt-2 btn btn-primary btn-lg">Sign In</button>
                 </div>
                 
                 <div class="d-flex align-items-center justify-content-center pb-4 pt-4">
                   <p class="mb-0 me-2">Don't have an account?</p>
-                  <button type="button" class="btn btn-outline-danger">Sign Up</button>
+                  <a href="/signup" class="btn btn-outline-danger" >Sign Up</a>
                 </div>
               </div>
             </div>
@@ -65,9 +69,46 @@
         </div>
       </section>
 
+      <!-- paste to sign up -->
+      <section class="vh-100 bg-warning text-dark p-5 text-center" id="signup">
+        <div class="container py-5">
+          <h1 class="mb-4">Sign Up</h1>
+          <div class="row d-flex align justify-content-center h-100">
+            <div class="card" style="max-width: 25rem;">
+              <div class="card-body">
+                <div class="row">
+                  <div class="my-4">
+                    <div class="form-outline">
+                      <input type="text" id="name-signup" class="form-control" />
+                      <label class="form-label" for="name-signup">Name</label>
+                    </div>
+                  </div>
+
+                  <!-- Email input -->
+                  <div class="form-outline mb-4">
+                    <input type="email" id="form3Example3" class="form-control" />
+                    <label class="form-label" for="form3Example3">Email address</label>
+                  </div>
+
+                  <!-- Password input -->
+                  <div class="form-outline mb-4">
+                    <input type="password" id="form3Example4" class="form-control" />
+                    <label class="form-label" for="form3Example4">Password</label>
+                  </div>
+
+                  <!-- Submit button -->
+                  <button type="submit" class="my-4 btn btn-primary btn-lg">Sign up</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- paste to dashboard -->
       <section>
 
       </section>
+
     </main>
   </header>
 </body>
