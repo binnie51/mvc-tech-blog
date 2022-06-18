@@ -1,9 +1,9 @@
 const blogPostHandler = async (event) => {
     event.preventDefault();
 
-    // Collect values from the login-form
-    const title = document.querySelector("#blog-title").value.trim();
-    const content = document.querySelector("#blog-content").value.trim();
+    // Collect values from the blog-post form
+    const title = document.querySelector("#blog-title-typed").value.trim();
+    const content = document.querySelector("#blog-content-typed").value.trim();
 
     if (title && content) {
         // Send POST req to the API endpoint
@@ -16,7 +16,7 @@ const blogPostHandler = async (event) => {
         });
 
         if (response.ok) {
-            document.location.replace('/profile');
+            document.location.replace('/dashboard');
         } else {
             alert(response.statusText);
         }

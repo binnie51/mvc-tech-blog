@@ -1,13 +1,13 @@
 {{#each blogs as |blog|}}
-    <div class="card">
+    <div class="card" style="width: 45rem;">
         <a class="blog-anchor" href="/blog/{{blog.id}}">
           <div class="card-body">
             <h3 class="card-title">
               {{blog.title}}
             </h3>
-            <h4 class="card-subtitle mb-2 text-muted">
-              Posted by {{blog.user_name}} {{format_date blog.date_created}}
-            </h4>
+            <h6 class="card-subtitle mb-2 text-muted">
+              Posted by {{blog.user.name}} on {{format_date blog.date_created}}
+            </h6>
             <p class="card-text">
               {{blog.content}}
             </p>

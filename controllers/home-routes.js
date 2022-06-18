@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET ruter to post new blog
+// GET router to post new blog
 router.get('/blog/post', withAuthentication, (req, res) => {
   res.render('blogpost');
 });
@@ -115,10 +115,10 @@ router.get('/dashboard', withAuthentication, async (req, res) => {
   }
 });
 
-// Login route. If users is already logged in, redirect to 'home', else, to 'login' page
+// Login route. If users is already logged in, redirect to 'dashboard', else, to 'login' page
 router.get('/login', (req, res) => {
   if (req.session.logged_in) {
-    res.redirect('/');
+    res.redirect('/dashboard');
     return;
   }
   res.render('login');
@@ -131,6 +131,6 @@ router.get('/signup', (res, req) => {
     return;
   }
   res.render('signup');
-})
+});
 
 module.exports = router;

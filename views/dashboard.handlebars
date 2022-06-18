@@ -5,9 +5,9 @@
             <h3 class="card-title">
               {{blog.title}}
             </h3>
-            <h4 class="card-subtitle mb-2 text-muted">
+            <h6 class="card-subtitle mb-2 text-muted">
               Posted by {{blog.user_name}} {{format_date blog.date_created}}
-            </h4>
+            </h6>
             <p class="card-text">
               {{blog.content}}
             </p>
@@ -16,5 +16,5 @@
     </div>
 {{/each}}
 
-<a href="/blog/post" class="btn btn-success btn-lg">
+<a href="/blog/post" class="btn btn-success btn-lg mt-5">
         <span class="glyphicon">&#x2b;</span>Add a post</a>

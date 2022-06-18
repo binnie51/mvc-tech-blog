@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { User } = require('../../models');
 
 // CREATE new user
-router.post('/', async (req, res) => {
+router.post('/signup', async (req, res) => {
   try {
     const userData = await User.create(req.body);
 
@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Login
+// to user log
 router.post('/login', async (req, res) => {
   try {
     const userData = await User.findOne({
@@ -44,7 +44,7 @@ router.post('/login', async (req, res) => {
     }
 
     req.session.save(() => {
-      req.sesion.user_id = userData.id;
+      req.session.user_id = userData.id;
       req.session.logged_in = true;
       console.log(
         '🚀 ~ file: user-routes.js ~ line 57 ~ req.session.save ~ req.session.cookie',
@@ -56,6 +56,19 @@ router.post('/login', async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
+  }
+});
+
+// GET all users
+router.get("/", async (req, res) => {
+  // find all users
+  try {
+    const userData = await User.findAll({
+      attributes: ["id", "name", "email", "password"],
+    });
+    res.json(userData);
+  } catch (error) {
+    res.status(400).json({ message: "Cannot find users!" });
   }
 });
 
