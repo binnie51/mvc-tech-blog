@@ -32,16 +32,23 @@
             </li>
             {{/if}}
           </ul>
+          
           <div class="bg-warning rounded text-center ms-5 ">
+            {{#if isDashboard}}
+            <h1 class="p-2 mb-2 text-dark fw-bold">
+              My Dashboard
+            </h1>
+            {{else}}
             <h1 class="p-2 mb-2 text-dark fw-bold">
               The Tech Blog
             </h1>
+            {{/if}}
           </div>
         </div>
       </div>
     </nav>
 
-    <main>
+    <main class="bg-warning text-dark p-5">
       {{{ body }}}
     </main>
   </header>

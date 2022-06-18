@@ -17,6 +17,8 @@ router.get('/', async (req, res) => {
     const blogs = blogData.map((blog) =>
       blog.get({ plain: true })
     );
+    console.log(blogs);
+
     res.render('homepage', {
       blogs,
       logged_in: req.session.logged_in,
@@ -25,6 +27,11 @@ router.get('/', async (req, res) => {
     console.log(err);
     res.status(500).json(err);
   }
+});
+
+// GET ruter to post new blog
+router.get('/blog/post', withAuthentication, (req, res) => {
+  res.render('blogpost');
 });
 
 // GET one specific blog post with the author, comments, and commenters with :id
@@ -36,9 +43,11 @@ router.get('/blog/:id', withAuthentication, async (req, res) => {
           model: User,
           attributes: [
             'id',
-            'name',
-          ],
-        },
+            'name'
+          ]
+        }
+      ],
+      include: [
         {
           model: Comments,
           attributes: [
@@ -47,6 +56,13 @@ router.get('/blog/:id', withAuthentication, async (req, res) => {
             'date_created',
           ]
         },
+        {
+          model: User,
+          attributes: [
+            'id',
+            'name',
+          ],
+        },
       ],
     });
 
@@ -54,11 +70,17 @@ router.get('/blog/:id', withAuthentication, async (req, res) => {
     
     // if logged in user has the same as the author of the blog post, 
     // they may edit their post(s)
-    if (blog.author_id === req.params.user_id) {
+    if (blog.author_id === req.session.user_id) {
       res.render('editBlog', {
         blog, 
         logged_in: req.session.logged_in,
         isDashboard: false
+      });
+    }
+    else {
+      res.render('blog', {
+        blog,
+        logged_in: req.session.logged_in,
       });
     }
     

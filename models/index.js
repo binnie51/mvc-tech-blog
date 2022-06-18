@@ -9,6 +9,7 @@ User.hasMany(Comments, {
 
 User.hasMany(Blog, {
     foreignKey: 'author_id',
+    onDelete: 'SET NULL'
 });
 
 Blog.belongsTo(User, {

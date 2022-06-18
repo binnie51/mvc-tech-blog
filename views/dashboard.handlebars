@@ -1,1 +1,20 @@
-{{ #each blogs as |blog| }}
+{{#each blogs as |blog|}}
+    <div class="card">
+        <a class="blog-anchor" href="/blog/{{blog.id}}">
+          <div class="card-body">
+            <h3 class="card-title">
+              {{blog.title}}
+            </h3>
+            <h4 class="card-subtitle mb-2 text-muted">
+              Posted by {{blog.user_name}} {{format_date blog.date_created}}
+            </h4>
+            <p class="card-text">
+              {{blog.content}}
+            </p>
+          </div>
+        </a>
+    </div>
+{{/each}}
+
+<a href="/blog/post" class="btn btn-success btn-lg">
+        <span class="glyphicon">&#x2b;</span>Add a post</a>
