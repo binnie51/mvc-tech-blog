@@ -18,7 +18,7 @@ const commentPostHandler = async (event) => {
     console.log('response in submit coment', response);
 
     if (response.ok) {
-        document.location.replace('/profile');
+        document.location.replace('/dashboard');
     } else {
         alert(response.statusText);
     }

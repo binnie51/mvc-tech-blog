@@ -2,6 +2,20 @@ const router = require('express').Router();
 const { Blog, Comments } = require('../../models');
 const withAuthentication = require('../../utils/auth');
 
+// GET all blogs
+router.get("/", async (req, res) => {
+    // find all Blogs
+    try {
+      const blogData = await Blog.findAll({
+        attributes: ["id", "title","content","author_id"],
+      });
+      res.json(blogData);
+    } catch (error) {
+      res.status(400).json({ message: "Cannot find blogs!" });
+    }
+});
+
+
 // GET blog with specific id (only after users have signed in)
 router.get('/:id', withAuthentication, async (req,res) => {
     try {
@@ -17,16 +31,14 @@ router.get('/:id', withAuthentication, async (req,res) => {
 // CREATE new blog
 router.post('/', withAuthentication, async (res, req) => {
     try {
-        const blogData = await Blog.create({
-            ...req.body,
-            title: req.body.title,
-            content: req.body.content,
-            author_id: req.session.user_id,
+        const createBlog = await Blog.create({
+          title: req.body.title,
+          content: req.body.content,
+          author_id: req.body.author_id
         });
-        res.status(200).json(blogData);
-    }
-    catch (err) {
-        res.status(400).json({ message: "Error! Can't create blog entry."});
+        return res.json(createBlog);
+    } catch (error) {
+        res.status(400).json({ message: "Cannot post blog!" });
     }
 });
 
