@@ -34,7 +34,7 @@ router.post('/', withAuthentication, async (res, req) => {
         const createBlog = await Blog.create({
           title: req.body.title,
           content: req.body.content,
-          author_id: req.body.author_id
+          author_id: req.body.user_id,
         });
         return res.json(createBlog);
     } catch (error) {

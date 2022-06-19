@@ -7,18 +7,19 @@ const blogPostHandler = async (event) => {
 
     if (title && content) {
         // Send POST req to the API endpoint
-        const response = await fetch('api/blog', {
+        const response = await fetch('/api/blog', {
             method: 'POST',
             body: JSON.stringify( { title, content }),
             headers: { 
                 'Content-Type': 'application/json'
-             },
+            },
         });
 
         if (response.ok) {
             document.location.replace('/dashboard');
         } else {
             alert(response.statusText);
+            console.log("Cannot post!")
         }
     }
 };

@@ -35,7 +35,7 @@ const blogDeleteHandler = async (event) => {
     const response = await fetch(req_url, {
     method: 'DELETE',
     headers: {
-        'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
       },
     });
 

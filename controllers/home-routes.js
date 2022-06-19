@@ -52,7 +52,7 @@ router.get('/blog/:id', withAuthentication, async (req, res) => {
           model: Comments,
           attributes: [
             'content',
-            'comenter_id',
+            'commenter_id',
             'date_created',
           ]
         },
