@@ -9,7 +9,7 @@ const commentPostHandler = async (event) => {
     const parsedCurrUrl = currentUrl.split('/');
     const blog_id = parseInt(parsedCurrUrl[parsedCurrUrl.length - 1]);
 
-    comment_url = `api/blog/${blog_id}/comment`
+    comment_url = `/api/blog/${blog_id}/comment`
     const response = await fetch(comment_url, {
         method: 'POST',
         body: JSON.stringify({ content, blog_id }),
@@ -18,7 +18,7 @@ const commentPostHandler = async (event) => {
     console.log('response in submit coment', response);
 
     if (response.ok) {
-        document.location.replace('/dashboard');
+        document.location.replace(`/blog/${blog_id}`);
     } else {
         alert(response.statusText);
     }

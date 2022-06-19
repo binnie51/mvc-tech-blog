@@ -34,9 +34,9 @@ router.post('/', withAuthentication, async (res, req) => {
         const createBlog = await Blog.create({
           title: req.body.title,
           content: req.body.content,
-          author_id: req.body.user_id,
+          author_id: req.session.user_id
         });
-        return res.json(createBlog);
+        res.status(200).json(createBlog);
     } catch (error) {
         res.status(400).json({ message: "Cannot post blog!" });
     }
@@ -72,7 +72,7 @@ router.delete('/:id', withAuthentication, async (res, req) => {
         const blogData = await Blog.destroy({
             where: {
                 id: req.params.id,
-                author_id: req.params.user_id,
+                author_id: req.session.user_id,
             },
         });
 

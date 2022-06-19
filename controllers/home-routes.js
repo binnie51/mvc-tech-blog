@@ -30,8 +30,8 @@ router.get('/', async (req, res) => {
 });
 
 // GET router to post new blog
-router.get('/blog/post', withAuthentication, (req, res) => {
-  res.render('blogpost');
+router.get('/blog/post', withAuthentication, async (req, res) => {
+  return res.render('blogpost');
 });
 
 // GET one specific blog post with the author, comments, and commenters with :id
@@ -125,12 +125,8 @@ router.get('/login', (req, res) => {
 });
 
 // Signup route
-router.get('/signup', (res, req) => {
-  if (req.session.logged_in) {
-    res.redirect('/');
-    return;
-  }
-  res.render('signup');
+router.get("/signup", async (req, res) => {
+  return res.render("signup");
 });
 
 module.exports = router;

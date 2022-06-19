@@ -2,14 +2,14 @@
 var currentUrl = window.location.pathname;
 const parsedCurrUrl = currentUrl.split('/');
 const blog_id = parseInt(parsedCurrUrl[parsedCurrUrl.length -1]);
-const req_url = `api/blog/${blog_id}`
+const req_url = `/api/blog/${blog_id}`
 
 // UPDATE an entry
 const blodUpdateHandler = async (event) => {
     event.preventDefault();
 
-    const title = document.querySelector('#blog-title').value.trim(); 
-    const content = document.querySelector('#blog-content').value.trim(); 
+    const title = document.querySelector('#blog-title-typed').value.trim(); 
+    const content = document.querySelector('#blog-content-typed').value.trim(); 
   
     if (title && content) {
       const response = await fetch(req_url, {
@@ -48,8 +48,8 @@ const blogDeleteHandler = async (event) => {
 
 document
   .querySelector('.blog-update')
-  .addEventListener('click', blodUpdateHandler);
+  .addEventListener('submit', blodUpdateHandler);
 
 document
   .querySelector('.blog-delete')
-  .addEventListener('click', blogDeleteHandler);
+  .addEventListener('submit', blogDeleteHandler);

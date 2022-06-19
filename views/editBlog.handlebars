@@ -6,18 +6,21 @@
                 <div class="card-body">
                     <div class="mb-3">
                     <label for="blog-title" class="form-label">Title:</label>
-                    <textarea type="text" class="form-control" id="blog-title-typed"
-                    value="{{blog.title}}"></textarea>
+                    <textarea type="text" class="form-control" id="blog-title-typed" rows="1" placeholder="Type your entry here">
+                        {{blog.title}}
+                    </textarea>
                     </div>
 
                     <div class="mb-3">
                     <label for="blog-content" class="form-label">Your Entry:</label>
-                    <textarea type="text" class="form-control" id="blog-content-typed" rows="3"></textarea>
+                    <textarea type="text" class="form-control" id="blog-content-typed" rows="3" placeholder="Type your entry here">
+                        {{blog.content}}
+                    </textarea>
                     </div>
 
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary me-md-2" type="submit">Update post</button>
-                    <button class="btn btn-danger" type="submit">Delete post</button>
+                    <button class="btn btn-primary me-md-2 blog-update" type="submit">Update post</button>
+                    <button class="btn btn-danger blog-delete" type="submit">Delete post</button>
                     </div>
                 </div>
             </form>
