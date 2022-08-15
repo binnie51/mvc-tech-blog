@@ -2,19 +2,19 @@
 var currentUrl = window.location.pathname;
 const parsedCurrUrl = currentUrl.split('/');
 const blog_id = parseInt(parsedCurrUrl[parsedCurrUrl.length -1]);
-const req_url = `/api/blog/${blog_id}`
+const req_url = `/api/blogs/${blog_id}`
 
 // UPDATE an entry
 const blodUpdateHandler = async (event) => {
     event.preventDefault();
 
     const title = document.querySelector('#blog-title-typed').value.trim(); 
-    const content = document.querySelector('#blog-content-typed').value.trim(); 
+    const content_blog = document.querySelector('#blog-content-typed').value.trim(); 
   
-    if (title && content) {
+    if (title && content_blog) {
       const response = await fetch(req_url, {
         method: 'PUT',
-        body: JSON.stringify({ title, content }),
+        body: JSON.stringify({ title, content_blog }),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -46,10 +46,12 @@ const blogDeleteHandler = async (event) => {
     }
 };
 
+// targets the <form> tags
 document
-  .querySelector('.blog-update')
+  .querySelector('.edit-blog-post')
   .addEventListener('submit', blodUpdateHandler);
 
+// targets the delete button
 document
-  .querySelector('.blog-delete')
-  .addEventListener('submit', blogDeleteHandler);
+  .querySelector('.blog-delete-btn')
+  .addEventListener('click', blogDeleteHandler);

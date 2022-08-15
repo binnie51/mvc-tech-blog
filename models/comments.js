@@ -11,11 +11,16 @@ Comments.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        content: {
+        content_comment: {
             type: DataTypes.TEXT,
+            allowNull: false,
+            validate: {
+                len: [1]
+            }
         },
         blog_id: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             references: {
                 model: 'blog',
                 key: 'id',

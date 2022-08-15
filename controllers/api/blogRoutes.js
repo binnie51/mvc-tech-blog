@@ -3,17 +3,17 @@ const { Blog, Comments } = require('../../models');
 const withAuthentication = require('../../utils/auth');
 
 // GET all blogs
-router.get("/", async (req, res) => {
-    // find all Blogs
-    try {
-      const blogData = await Blog.findAll({
-        attributes: ["id", "title","content","author_id"],
-      });
-      res.json(blogData);
-    } catch (error) {
-      res.status(400).json({ message: "Cannot find blogs!" });
-    }
-});
+// router.get("/", async (req, res) => {
+//     // find all Blogs
+//     try {
+//       const blogData = await Blog.findAll({
+//         attributes: ["id", "title","content_blog","author_id"],
+//       });
+//       res.json(blogData);
+//     } catch (error) {
+//       res.status(400).json({ message: "Cannot find blogs!" });
+//     }
+// });
 
 
 // GET blog with specific id (only after users have signed in)
@@ -29,11 +29,11 @@ router.get('/:id', withAuthentication, async (req,res) => {
 });
 
 // CREATE new blog
-router.post('/', withAuthentication, async (res, req) => {
+router.post('/', withAuthentication, async (req, res) => {
     try {
         const createBlog = await Blog.create({
           title: req.body.title,
-          content: req.body.content,
+          content_blog: req.body.content_blog,
           author_id: req.session.user_id
         });
         res.status(200).json(createBlog);
@@ -46,17 +46,20 @@ router.post('/', withAuthentication, async (res, req) => {
 // username to the author of the blog post
 router.put('/:id', withAuthentication, async (req, res) => {
     try {
-        if (req.body && req.params.id) {
-            const blogData = await Blog.update(req.body, {
-                where: {
-                    id: req.params.id,
-                    author_id: req.session.user_id,
-                },
-            });
+        const blogData = await Blog.update({
+            title: req.body.title,
+            content_blog: req.body.content_blog,
+            author_id: req.session.user_id,
+        },
+        {
+            where: {
+                id: req.params.id,
+                author_id: req.session.user_id,
+            },
+        });
 
-            if (!blogData) {
-                res.status(404).json({ message: 'No blog post found with this id!' });
-            }
+        if (!blogData) {
+            res.status(404).json({ message: 'No blog post found with this id!' });
         }
         res.status(200).json(blogData);
     }
@@ -67,7 +70,7 @@ router.put('/:id', withAuthentication, async (req, res) => {
 
 // DELETE a specific blog entry that belongs to the a user who has a matching 
 // username to the author of the blog post
-router.delete('/:id', withAuthentication, async (res, req) => {
+router.delete('/:id', withAuthentication, async (req, res) => {
     try {
         const blogData = await Blog.destroy({
             where: {
@@ -88,11 +91,11 @@ router.delete('/:id', withAuthentication, async (res, req) => {
 // Add comment to a specific blog post 
 router.post('/:id/comment', withAuthentication, async (req, res) => {
     try {
-        if (req.body.content) {
+        if (req.body.content_blog) {
             const commentsData = await Comments.create({
-                content: req.body.content,
+                content_comment: req.body.content_blog,
                 blog_id: req.body.blog_id,
-                commentor_id: req.session.user_id,
+                commenter_id: req.session.user_id,
             });
             res.status(200).json(commentsData);
         }

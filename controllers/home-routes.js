@@ -31,7 +31,7 @@ router.get('/', async (req, res) => {
 
 // GET router to post new blog
 router.get('/blog/post', withAuthentication, async (req, res) => {
-  return res.render('blogpost');
+  res.render('blogpost');
 });
 
 // GET one specific blog post with the author, comments, and commenters with :id
@@ -51,7 +51,7 @@ router.get('/blog/:id', withAuthentication, async (req, res) => {
         {
           model: Comments,
           attributes: [
-            'content',
+            'content_comment',
             'commenter_id',
             'date_created',
           ]
@@ -61,9 +61,9 @@ router.get('/blog/:id', withAuthentication, async (req, res) => {
           attributes: [
             'id',
             'name',
-          ],
+          ]
         },
-      ],
+      ]
     });
 
     const blog = blogData.get({ plain: true });
@@ -90,7 +90,7 @@ router.get('/blog/:id', withAuthentication, async (req, res) => {
   }
 });
 
-// GET Dashboard
+// GET Dashboard page
 router.get('/dashboard', withAuthentication, async (req, res) => {
   try {
     const blogData = await Blog.findAll({
@@ -118,14 +118,14 @@ router.get('/dashboard', withAuthentication, async (req, res) => {
 // Login route. If users is already logged in, redirect to 'dashboard', else, to 'login' page
 router.get('/login', (req, res) => {
   if (req.session.logged_in) {
-    res.redirect('/dashboard');
+    res.redirect('/');
     return;
   }
   res.render('login');
 });
 
 // Signup route
-router.get("/signup", async (req, res) => {
+router.get("/signup", (req, res) => {
   return res.render("signup");
 });
 

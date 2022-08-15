@@ -2,23 +2,23 @@ const commentPostHandler = async (event) => {
     event.preventDefault();
 
     // gather values from login-form
-    const content = document.querySelector("#comment-typed").value.trim();
+    const content_blog = document.querySelector("#comment-typed").value.trim();
     var currentUrl = window.location.pathname;
     console.log(currentUrl);
 
     const parsedCurrUrl = currentUrl.split('/');
     const blog_id = parseInt(parsedCurrUrl[parsedCurrUrl.length - 1]);
 
-    comment_url = `/api/blog/${blog_id}/comment`
+    comment_url = `/api/blogs/${blog_id}/comment`
     const response = await fetch(comment_url, {
         method: 'POST',
-        body: JSON.stringify({ content, blog_id }),
+        body: JSON.stringify({ content_blog, blog_id }),
         headers: { 'Content-Type' : 'application/json' }
     })
     console.log('response in submit coment', response);
 
     if (response.ok) {
-        document.location.replace(`/blog/${blog_id}`);
+        document.location.replace(`/blogs/${blog_id}`);
     } else {
         alert(response.statusText);
     }
