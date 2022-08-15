@@ -1,8 +1,8 @@
 const commentPostHandler = async (event) => {
     event.preventDefault();
 
-    // gather values from login-form
-    const content_blog = document.querySelector("#comment-typed").value.trim();
+    // gather values from comment-form
+    const content_comment = document.querySelector("#comment-typed").value.trim();
     var currentUrl = window.location.pathname;
     console.log(currentUrl);
 
@@ -12,7 +12,7 @@ const commentPostHandler = async (event) => {
     comment_url = `/api/blogs/${blog_id}/comment`
     const response = await fetch(comment_url, {
         method: 'POST',
-        body: JSON.stringify({ content_blog, blog_id }),
+        body: JSON.stringify({ content_comment, blog_id }),
         headers: { 'Content-Type' : 'application/json' }
     })
     console.log('response in submit coment', response);

@@ -91,9 +91,9 @@ router.delete('/:id', withAuthentication, async (req, res) => {
 // Add comment to a specific blog post 
 router.post('/:id/comment', withAuthentication, async (req, res) => {
     try {
-        if (req.body.content_blog) {
+        if (req.session) {
             const commentsData = await Comments.create({
-                content_comment: req.body.content_blog,
+                content_comment: req.body.content_comment,
                 blog_id: req.body.blog_id,
                 commenter_id: req.session.user_id,
             });

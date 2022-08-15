@@ -35,8 +35,9 @@ router.get('/blog/post', withAuthentication, async (req, res) => {
 });
 
 // GET one specific blog post with the author, comments, and commenters with :id
-router.get('/blog/:id', withAuthentication, async (req, res) => {
+router.get('/blogs/:id', async (req, res) => {
   try {
+    console.log('Retrieve blog comments');
     const blogData = await Blog.findByPk(req.params.id, {
       include: [
         {
@@ -56,6 +57,8 @@ router.get('/blog/:id', withAuthentication, async (req, res) => {
             'date_created',
           ]
         },
+      ],
+      include: [
         {
           model: User,
           attributes: [

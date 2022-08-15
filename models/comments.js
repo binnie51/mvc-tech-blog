@@ -13,10 +13,6 @@ Comments.init(
         },
         content_comment: {
             type: DataTypes.TEXT,
-            allowNull: false,
-            validate: {
-                len: [1]
-            }
         },
         blog_id: {
             type: DataTypes.INTEGER,
